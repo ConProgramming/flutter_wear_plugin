@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener
 import androidx.core.view.WindowInsetsCompat
 
 import androidx.wear.ambient.AmbientMode
-import androidx.wear.ambient.AmbientModeSupport;
 
 private const val CHANNEL_NAME = "wear"
 
@@ -29,11 +28,11 @@ class WearPlugin private constructor(
         val channel: MethodChannel) :
         MethodCallHandler {
 
-    private var mAmbientController: AmbientModeSupport.AmbientController? = null
+    private var mAmbientController: AmbientMode.AmbientController? = null
 
     init {
         // Set the Flutter ambient callbacks
-        mAmbientController = AmbientModeSupport.attachAmbientSupport(activity)
+        mAmbientController = AmbientMode.attachAmbientSupport(activity)
     }
 
     companion object {
@@ -72,7 +71,7 @@ class WearPlugin private constructor(
 /*
  * Pass ambient callback back to Flutter
  */
-class FlutterAmbientCallback(private val channel: MethodChannel) : AmbientModeSupport.AmbientCallback() {
+class FlutterAmbientCallback(private val channel: MethodChannel) : AmbientMode.AmbientCallback() {
 
     override fun onEnterAmbient(ambientDetails: Bundle) {
         channel.invokeMethod("enter", null)
